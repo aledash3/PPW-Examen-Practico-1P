@@ -1,0 +1,228 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict QDSY2LKGjeb7TtOgszkjEMR7SoONlAPi5ziFABPAhPv1Pb2S6nfYcs3UcUELRYT
+
+-- Dumped from database version 18.1
+-- Dumped by pg_dump version 18.1
+
+-- Started on 2025-11-29 15:48:07
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 222 (class 1259 OID 16447)
+-- Name: bitacora; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.bitacora (
+    id integer NOT NULL,
+    usuario_id integer NOT NULL,
+    accion text NOT NULL,
+    fecha timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.bitacora OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 16446)
+-- Name: bitacora_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.bitacora_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.bitacora_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5030 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: bitacora_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.bitacora_id_seq OWNED BY public.bitacora.id;
+
+
+--
+-- TOC entry 220 (class 1259 OID 16427)
+-- Name: usuarios; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.usuarios (
+    id integer NOT NULL,
+    nombre character varying(100) NOT NULL,
+    email character varying(100) NOT NULL,
+    password character varying(255) NOT NULL,
+    rol character varying(50) DEFAULT 'estudiante'::character varying NOT NULL,
+    activo boolean DEFAULT true NOT NULL,
+    fecha_creacion timestamp without time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.usuarios OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 16426)
+-- Name: usuarios_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.usuarios_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.usuarios_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 5031 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: usuarios_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.usuarios_id_seq OWNED BY public.usuarios.id;
+
+
+--
+-- TOC entry 4865 (class 2604 OID 16450)
+-- Name: bitacora id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.bitacora ALTER COLUMN id SET DEFAULT nextval('public.bitacora_id_seq'::regclass);
+
+
+--
+-- TOC entry 4861 (class 2604 OID 16430)
+-- Name: usuarios id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios ALTER COLUMN id SET DEFAULT nextval('public.usuarios_id_seq'::regclass);
+
+
+--
+-- TOC entry 5024 (class 0 OID 16447)
+-- Dependencies: 222
+-- Data for Name: bitacora; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.bitacora (id, usuario_id, accion, fecha) FROM stdin;
+1	1	Creación de cuenta de administrador	2025-11-29 03:15:41.428082
+2	2	Registro de nuevo usuario	2025-11-29 03:15:41.428082
+3	4	Login Exitoso	2025-11-29 03:25:49.862667
+4	4	Inicio de Sesión	2025-11-29 03:25:49.951127
+5	1	Login Exitoso	2025-11-29 11:12:54.73344
+6	1	Inicio de Sesión	2025-11-29 11:12:54.851248
+7	1	Bloqueó usuario ID: 2	2025-11-29 11:26:59.465061
+8	1	Cierre de Sesión	2025-11-29 11:27:04
+9	1	Login Exitoso	2025-11-29 11:27:37.446239
+10	1	Inicio de Sesión	2025-11-29 11:27:37.513724
+11	1	Activó usuario ID: 2	2025-11-29 11:27:42.83202
+12	1	Cierre de Sesión	2025-11-29 11:27:47.525994
+13	2	Login Exitoso	2025-11-29 11:27:54.804935
+14	2	Inicio de Sesión	2025-11-29 11:27:54.867935
+15	1	Login Exitoso	2025-11-29 15:37:49.388699
+16	1	Inicio de Sesión	2025-11-29 15:37:49.45581
+\.
+
+
+--
+-- TOC entry 5022 (class 0 OID 16427)
+-- Dependencies: 220
+-- Data for Name: usuarios; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.usuarios (id, nombre, email, password, rol, activo, fecha_creacion) FROM stdin;
+1	Admin UPS	admin@ups.edu.ec	admin123	admin	t	2025-11-29 03:15:41.428082
+3	Maria Solano	maria.solano@test.com	pass12345	estudiante	f	2025-11-29 03:15:41.428082
+4	david	dcruzp5@est.ups.edu.ec	12345678	estudiante	t	2025-11-29 03:25:41.549971
+2	Juan Pérez	juan.perez@test.com	pass12345	estudiante	t	2025-11-29 03:15:41.428082
+\.
+
+
+--
+-- TOC entry 5032 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: bitacora_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.bitacora_id_seq', 16, true);
+
+
+--
+-- TOC entry 5033 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: usuarios_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.usuarios_id_seq', 4, true);
+
+
+--
+-- TOC entry 4872 (class 2606 OID 16458)
+-- Name: bitacora bitacora_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.bitacora
+    ADD CONSTRAINT bitacora_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4868 (class 2606 OID 16445)
+-- Name: usuarios usuarios_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios
+    ADD CONSTRAINT usuarios_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 4870 (class 2606 OID 16443)
+-- Name: usuarios usuarios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.usuarios
+    ADD CONSTRAINT usuarios_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4873 (class 2606 OID 16459)
+-- Name: bitacora fk_usuario; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.bitacora
+    ADD CONSTRAINT fk_usuario FOREIGN KEY (usuario_id) REFERENCES public.usuarios(id) ON DELETE CASCADE;
+
+
+-- Completed on 2025-11-29 15:48:08
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict QDSY2LKGjeb7TtOgszkjEMR7SoONlAPi5ziFABPAhPv1Pb2S6nfYcs3UcUELRYT
+
