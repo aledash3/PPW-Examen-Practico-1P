@@ -82,19 +82,29 @@ public class UsuarioServlet extends HttpServlet {
         }
     }
 
-    private void registrar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+private void registrar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String nombre = request.getParameter("txtNombre");
         String email = request.getParameter("txtEmail");
         String pass = request.getParameter("txtPass");
-        
+
+        // Validar longitud de contraseña
         if(pass.length() < 8){
             request.setAttribute("error", "La contraseña debe tener mínimo 8 caracteres");
             request.getRequestDispatcher("registro.jsp").forward(request, response);
             return;
         }
-        
+
+        // Validar dominio del correo
+        String regex = "^[A-Za-z0-9._%+-]+@(est\\.ups\\.edu\\.ec|ups\\.edu\\.ec)$";
+        if(!email.matches(regex)){
+            request.setAttribute("error", "El correo debe ser institucional: @est.ups.edu.ec o @ups.edu.ec");
+            request.getRequestDispatcher("registro.jsp").forward(request, response);
+            return;
+        }
+
         // Rol por defecto: estudiante
         Usuario u = new Usuario(nombre, email, pass, "estudiante");
+
         if(usuarioDAO.registrar(u)){
             request.setAttribute("mensaje", "Registro exitoso, por favor inicie sesión.");
             request.getRequestDispatcher("login.jsp").forward(request, response);
